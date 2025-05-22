@@ -6,6 +6,7 @@ using UnityEngine;
 public class MeditiateAttackCommand : IUnitCommand
 {
     private bool willHitTarget;
+    private int previousMaxHealth;
     public MeditiateAttackCommand(CommandData commandData)
     {
         this.CommandData = commandData;
@@ -19,10 +20,10 @@ public class MeditiateAttackCommand : IUnitCommand
     {
         if (willHitTarget)
         {
-            if (!targetUnit.IsAlive())
-                targetUnit.Revive();
-            targetUnit.RestoreHealth(actorUnit.CurrentPower);
-            actorUnit.Owner.ResetCurrentActivePlayer();
+            var healthToReduce = targetUnit.CurrentMaxHealth - previousMaxHealth;
+            targetUnit.CurrentMaxHealth = previousMaxHealth;
+            targetUnit.TakeDamage(healthToReduce);
         }
+        actorUnit.Owner.ResetCurrentActivePlayer();
     }
 }

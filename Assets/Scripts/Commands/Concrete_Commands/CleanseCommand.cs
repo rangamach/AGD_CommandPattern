@@ -6,6 +6,7 @@ using UnityEngine;
 public class CleanseCommand : IUnitCommand
 {
     private bool willHitTarget;
+    private int prevPower;
     public CleanseCommand(CommandData commandData)
     {
         this.CommandData = commandData;
@@ -19,9 +20,9 @@ public class CleanseCommand : IUnitCommand
     {
         if (willHitTarget)
         {
-            if (!targetUnit.IsAlive())
-                targetUnit.Revive();
-            targetUnit.RestoreHealth(actorUnit.CurrentPower);
+            if (willHitTarget)
+                targetUnit.CurrentPower = prevPower;
+
             actorUnit.Owner.ResetCurrentActivePlayer();
         }
     }

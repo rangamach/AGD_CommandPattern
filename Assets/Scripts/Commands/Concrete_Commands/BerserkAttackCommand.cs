@@ -21,9 +21,17 @@ public class BerserkAttackCommand : IUnitCommand
         {
             if (!targetUnit.IsAlive())
                 targetUnit.Revive();
-            targetUnit.RestoreHealth(actorUnit.CurrentPower);
-            actorUnit.Owner.ResetCurrentActivePlayer();
+
+            targetUnit.RestoreHealth(actorUnit.CurrentPower * 2);
         }
+        else
+        {
+            if (!actorUnit.IsAlive())
+                actorUnit.Revive();
+
+            actorUnit.RestoreHealth(actorUnit.CurrentPower * 2);
+        }
+        actorUnit.Owner.ResetCurrentActivePlayer();
     }
 
     public override bool WillHitTarget() => true;

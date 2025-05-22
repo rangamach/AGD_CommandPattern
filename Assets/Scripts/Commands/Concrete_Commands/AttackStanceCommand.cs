@@ -19,9 +19,7 @@ public class AttackStanceCommand : IUnitCommand
     {
         if (willHitTarget)
         {
-            if (!targetUnit.IsAlive())
-                targetUnit.Revive();
-            targetUnit.RestoreHealth(actorUnit.CurrentPower);
+            targetUnit.CurrentPower -= (int)(targetUnit.CurrentPower * 0.2f);
             actorUnit.Owner.ResetCurrentActivePlayer();
         }
     }
