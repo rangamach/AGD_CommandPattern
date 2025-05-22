@@ -64,6 +64,8 @@ namespace Command.Player
 
         public bool IsAlive() => aliveState == UnitAliveState.ALIVE;
 
+        public void ProcessUnitCommand(IUnitCommand commandToProcess) => GameService.Instance.CommandInvoker.ProcessCommand(commandToProcess);
+
         public void TakeDamage(int damageToTake)
         {
             CurrentHealth -= damageToTake;

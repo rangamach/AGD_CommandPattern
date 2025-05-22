@@ -82,6 +82,8 @@ namespace Command.Player
             units.Clear();
         }
 
+        public void ProcessUnitCommand(IUnitCommand commandToProcess) => GetUnitByID(commandToProcess.CommandData.ActorUnitID).ProcessUnitCommand(commandToProcess);
+
         // TODO:    What is this??
         public void ResetCurrentActivePlayer()
         {
