@@ -8,6 +8,8 @@ public class CommandInvoker
 {
     private Stack<ICommand> commandRegistry = new Stack<ICommand>();
 
+    private void SubscribeToEvents() => GameService.Instance.EventService.OnReplayButtonClicked.AddListener(SetReplayStack);
+
     public void ProcessCommand(ICommand commandToProcess)
     {
         ExecuteCommand(commandToProcess);
@@ -23,4 +25,9 @@ public class CommandInvoker
     }
     private bool RegistryEmpty() => commandRegistry.Count == 0;
     private bool CommandBelongsToActivePlayer() => (commandRegistry.Peek() as IUnitCommand).CommandData.ActorPlayerID == GameService.Instance.PlayerService.ActivePlayerID;
+    public void SetReplayStack()
+    {
+        GameService.Instance.ReplayService.SetCommandStack(commandRegistry);
+        commandRegistry.Clear();
+    }
 }
