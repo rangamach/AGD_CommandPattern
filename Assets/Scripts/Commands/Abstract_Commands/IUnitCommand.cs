@@ -11,6 +11,7 @@ public abstract class IUnitCommand : ICommand
     protected UnitController targetUnit;
     public abstract void Execute();
     public abstract bool WillHitTarget();
+    public abstract void Undo();
     public void SetActorUnit(UnitController actorUnit) => this.actorUnit = actorUnit;
     public void SetTargetUnit(UnitController targetUnit) => this.targetUnit = targetUnit;
 }

@@ -15,5 +15,16 @@ public class BerserkAttackCommand : IUnitCommand
     }
     public override void Execute() => GameService.Instance.ActionService.GetActionByType(Command.Actions.CommandType.BerserkAttack).PerformAction(actorUnit, targetUnit, willHitTarget);
 
+    public override void Undo()
+    {
+        if (willHitTarget)
+        {
+            if (!targetUnit.IsAlive())
+                targetUnit.Revive();
+            targetUnit.RestoreHealth(actorUnit.CurrentPower);
+            actorUnit.Owner.ResetCurrentActivePlayer();
+        }
+    }
+
     public override bool WillHitTarget() => true;
 }

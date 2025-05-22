@@ -15,4 +15,12 @@ public class HealCommand : IUnitCommand
     public override void Execute() => GameService.Instance.ActionService.GetActionByType(Command.Actions.CommandType.Heal).PerformAction(actorUnit, targetUnit, willHitTarget);
 
     public override bool WillHitTarget() => true;
+    public override void Undo()
+    {
+        if (willHitTarget)
+        {
+            targetUnit.TakeDamage(actorUnit.CurrentPower);
+            actorUnit.Owner.ResetCurrentActivePlayer();
+        }
+    }
 }
