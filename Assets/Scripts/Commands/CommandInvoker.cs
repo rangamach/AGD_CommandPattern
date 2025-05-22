@@ -8,6 +8,8 @@ public class CommandInvoker
 {
     private Stack<ICommand> commandRegistry = new Stack<ICommand>();
 
+    public CommandInvoker() => SubscribeToEvents();
+
     private void SubscribeToEvents() => GameService.Instance.EventService.OnReplayButtonClicked.AddListener(SetReplayStack);
 
     public void ProcessCommand(ICommand commandToProcess)
