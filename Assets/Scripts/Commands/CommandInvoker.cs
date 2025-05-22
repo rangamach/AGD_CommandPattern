@@ -1,5 +1,7 @@
+using Command.Main;
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class CommandInvoker
@@ -14,4 +16,11 @@ public class CommandInvoker
 
     public void ExecuteCommand(ICommand commandToExecute) => commandToExecute.Execute();
     public void RegisterCommand(ICommand commandToRegister) => commandRegistry.Push(commandToRegister);
+    public void Undo()
+    {
+        if(!RegistryEmpty() && CommandBelongsToActivePlayer())
+            commandRegistry.Pop().Undo();
+    }
+    private bool RegistryEmpty() => commandRegistry.Count == 0;
+    private bool CommandBelongsToActivePlayer() => (commandRegistry.Peek() as IUnitCommand).CommandData.ActorPlayerID == GameService.Instance.PlayerService.ActivePlayerID;
 }
