@@ -82,12 +82,22 @@ namespace Command.Player
             units.Clear();
         }
 
-        // TODO:    What is this??
+        public void ProcessUnitCommand(IUnitCommand commandToProcess) => GetUnitByID(commandToProcess.CommandData.ActorUnitID).ProcessUnitCommand(commandToProcess);
+
         public void ResetCurrentActivePlayer()
         {
             units[activeUnitIndex].ResetUnitIndicator();
             activeUnitIndex--;
-            units[activeUnitIndex].StartUnitTurn();
+            while(activeUnitIndex >= 0)
+            {
+                if (!units[activeUnitIndex].IsAlive())
+                    activeUnitIndex--;
+                else
+                {
+                    units[activeUnitIndex].StartUnitTurn();
+                    break;
+                }
+            }
         }
     }
 }
